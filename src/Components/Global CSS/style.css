@@ -1,0 +1,533 @@
+:root{
+
+}
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* border: 1px solid pink; */
+    font-family: Arial, Helvetica, sans-serif;
+    list-style-type: none;
+    /* white-space: nowrap; */
+
+}
+
+/* body{
+    background-color: rgba(75, 75, 151, 0.062);
+} */
+.login-sign-cont{
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #a4508b;
+    background-image: linear-gradient(326deg, #a4508b 0%, #3e0458 74%);
+    background-image: url(../../Images/bg3.jpg);
+    background-size: cover;
+}
+.quotes-cont{
+    position: absolute;
+    left: 100px;
+    top: 100px;
+    color: white;
+    font-size: 25px;
+    font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.company-info{
+    font-size: 70px;
+    text-align: left;
+    color: #ffffff;
+    font-weight: 600;
+    /* padding: 100px 0px 0px 0px; */
+    
+}
+.welcome-text{
+    font-size: 55px;
+    text-align: left;
+    margin-bottom: 100px;
+}
+.quote-text{
+    font-style: italic;
+    padding: 100px 50px;
+    font-size: 30px;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.login-cont{
+    position: absolute;
+    bottom: 120px;
+    right: 200px;
+    width: 100%;
+    max-width: 224px;
+}
+
+input:focus{
+    outline: none;
+}
+.login-cont form div{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.login-cont form input{
+    width: 100%;
+    padding: 8px 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid white;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    background-color: transparent;
+    color: white;
+}
+
+.login-cont button{
+    width: 100%;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 2px solid white;
+    color: transparent;
+    margin-top: 13px;
+    background-color: white;
+    color: #3e0458;
+    font-weight: 700;
+    padding: 5px 2px;
+}
+
+
+.login-cont form input::placeholder{
+    color: white;
+    font-weight: 400;
+}
+.login-cont form div{
+   margin: 10px 0px;
+}
+form .login-sign-title{
+    margin-bottom: 10px;
+    font-size: 38px;
+    color: white;
+    /* border-bottom: 2px solid  white; */
+    padding: 8px 0px;
+}
+
+.input-cont{
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+}
+.sm-white,sm-white>div{
+    color: white;
+    text-align: center;
+    font-size:13px;
+    display: flex;
+    justify-content: center;
+}
+.sm-white a{
+    color: white;
+    padding-left: 6px;
+}
+
+.ContactComp{
+    position: absolute;
+    left: 0px;
+    height: 100%;
+    display: flex;
+}
+.ContactComp svg{
+    fill: white;
+    height: 60px;
+    width:60px;
+}
+
+.ContactComp > :first-child{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    gap: 30px;
+    padding: 0px 10px 0px 5px;
+    height: 100%;
+}
+.social-border{
+    height: 460px;
+    margin: auto;
+    border-right: 1px solid white;
+
+}
+
+.login-cont svg{
+    fill: white;
+    height: 45px;
+    width: 45px;
+}
+/* .linkdn:hover{
+    box-shadow: 1px 5px 1px;
+}
+.insta:hover{
+    fill: #D82977
+}
+.fb:hover{
+    fill: #395498;
+} */
+
+.top-nav-bar{
+    background-image: linear-gradient(326deg, #5F19B4 0%, #5f0a87 74%);
+    padding: 10px 50px;
+    position: absolute;
+    width: 100%;
+    color: white;
+    top: 0px;
+}
+nav{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.nav-company-info{
+    font-size: 30px;
+    font-weight: 600;
+    position: relative;
+    left: 10px;
+}
+.nav-contents{
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+}
+
+.sign-cont{
+    position: static;
+    width: 100%;
+    max-width: 224px;
+    margin-top: 100px;
+
+}
+label{
+    color: white;
+}
+.login-cont span input{
+    width: 20px;
+    margin: 0px 3px;
+}
+/* 
+.dashboard{
+    position: absolute;
+} */
+
+.dashmenu{
+    background-color: #3e0458;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    padding: 0px 14px 0px 8px;
+}
+.dashmenu div div{
+    margin: 25px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.dashmenu svg{
+    height: 40px;
+    width: 40px;
+    color: rgba(255, 255, 255, 0.4);
+}
+.dashmenu svg:hover{
+    color: rgba(255, 255, 255);
+}
+.dashmenu .editbtn{
+    margin-right: -5px;
+    position: relative;
+}
+.dashmenu .profile{
+    margin-right: -5px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+}
+.addbtn{
+    position: relative;
+}
+.addbtn::hover .MenuFloatBtn{
+    display: block;
+}
+
+.MenuFloatBtn{
+    /* text-align: left; */
+    position: absolute;
+    left: 80px;
+    font-weight: 500;
+    color: white;
+    white-space: nowrap;
+    font-size: 16px;
+    /* background-color: aquamarine; */
+}
+
+.MenuFloatBtn ul li{
+    /* margin: 20px 0px; */
+    background-color: #3e0458;
+    padding: 6px 8px;
+    border-radius: 10px;
+}
+.MenuFloatBtn ul{
+    animation: growRight 100ms ease-in-out forwards ;
+    display: flex;
+    flex-flow: column;
+    
+
+}
+.MenuFloatBtn a{
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 5px 5px;
+}
+.white-blk{
+    background-color: white;
+    margin: 10px 80px 10px 120px;
+    padding: 50px 10%;
+    border-radius: 12px;   
+    /* border: 1px solid #3e0458; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.project-display{
+    /* background-color: white; */
+    /* margin: 0px 80px; */
+    /* padding: 50px  10% ; */
+    text-align: left;
+    color:  #3e0458;
+
+}
+
+
+.project-display > div{
+    display: flex;
+    justify-content: space-between;
+    flex-flow: wrap;
+    margin: 30px 0px;
+    gap: 10px;
+}
+.label
+{
+    font-weight: 600px;
+    font-size: 18px;
+    display: inline-block;
+    width: 160px;
+    margin: 5px 0px;
+}
+.project-display input{
+    width: 100%;
+    max-width: 200px;
+    border-radius: 5px;
+    padding: 10px 10px;
+    outline: none;
+    border: none;
+    background-color: rgb(62,4,88,.1);
+
+}
+textarea{
+    height: 80px;
+    width: 100%;
+    max-width: 400px;
+    border-radius: 5px;
+    padding: 10px 10px;
+    outline: none;
+    border: none;
+    background-color: rgb(62,4,88,.1);
+}
+
+/* .dates div{
+    margin: 10px 0px;
+} */
+ h1{
+    font-size: 50px;
+    padding-bottom: 50px;
+    border-bottom: 1px solid gray;
+    text-align: left;
+}
+.react-select-container{
+    flex-grow: 2;
+
+}
+.simple-btn{
+    padding: 8px 8px;
+    color: white;
+    background-color: #3e0458;
+    border: none;
+    border-radius: 5px;
+}
+.displayteam{
+    display: block !important;
+}
+.displayteam > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(128, 128, 128, 0.164);
+    border-radius: 10px;
+    /* border-top: 1px solid rgba(128, 128, 128, 0.164); */
+    padding: 8px 4px;
+    margin: 3px 0px;
+    font-weight: 600px;
+    font-size: 18px;
+
+}
+.displayteam > div > div{
+    display: grid;
+    grid-template-columns: 100px 400px 1fr;
+}
+.displayteam .teamlabel{
+    font-size: 12px;
+    font-size: 600;
+    color: gray;
+}
+.create-edit-proj{
+    display: flex;
+    justify-content:flex-end;
+}
+.create-edit-proj button{
+    padding: 5px 10px;
+    margin: 0px 10px;
+}
+.create-edit-proj .reset-btn{
+    background-color: white;
+    color: #3e0458;
+    border: 1px solid #3e0458;
+}
+
+.addemployee input{
+    width: 100%;
+    max-width: 260px;
+    border-radius: 5px;
+    padding: 10px 10px;
+    outline: none;
+    border: none;
+    background-color: rgb(62,4,88,.1);
+    font-size: 17px;
+}
+
+.form-flex > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-items: flex-start;
+    width: 100%;
+    max-width: 500px;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 17px;
+    margin: 15px 0px;
+}
+.addemployee input[type=checkbox]{
+    width: 30px;
+}
+.grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+}
+.projects-list > div{
+    display: flex;
+}
+
+@keyframes growRight {
+    0% {
+        transform: translateX(-30%);
+        gap: 0px;
+    }
+
+    100% {
+        transform: translateX(0%);
+        gap: 20px;
+    }
+}
+
+
+
+
+/********************************************** Media query ****************************** */
+
+@media screen and (max-width:1200px)  {
+
+    .quotes-cont{
+        left: 80px;  
+    }
+    .welcome-text{
+        font-size: 50px;
+    }
+    .company-info{
+        font-size: 60px;
+    }
+    .login-cont{
+        right: 80px;
+    }
+
+    .company-info-mb{
+        color: white;
+        font-size: 30px;
+        font-weight: 500;
+    }
+}
+
+
+
+@media screen and (max-width:1008px)  {
+
+    .quotes-cont{
+        display: none;
+    }
+    .social-borde,.ContactComp{
+        display: none;
+    }
+    .login-cont{
+        margin: 0px;
+        position: static;
+        background-color: rgb(116, 37, 92,.5);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+  
+    .login-sign-cont{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .company-info-mb{
+        color: white;
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    .login-cont{
+        position:static;
+        width: 100%;
+    max-width: 254px;
+       
+    }
+}
+
+
+@media screen and (max-width:700px)  {
+    .dashmenu{
+        display: none;
+    }
+ .login-sign-cont{
+ }
+ .nav-contents{
+    display: none;
+ }
+ .login-cont{
+    width: 100%;
+    max-width: 254px;
+    margin: auto;
+ }
+}
