@@ -5,6 +5,10 @@ import DisplayProject from "../DisplayProject/DisplayProject";
 import DisplayTeam from "../DisplayTeam/DisplayTeam";
 import Select from "react-select";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {AiOutlineCloseCircle} from "react-icons/ai"
+
 
 const EditProject = () => {
   const [allEmployee, setAllEmployee] = useState([]);
@@ -12,6 +16,7 @@ const EditProject = () => {
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [role, setRole] = useState(null);
   const [available, setAvailable] = useState([]);
+  const [allRoles, setAllRoles] = useState([]);
   const [DataToSend, setDataToSend] = useState({
     projectname: "",
     projectstart: "",
@@ -28,53 +33,49 @@ const EditProject = () => {
     { value: "DevOps", label: "DevOps" },
   ];
 
-
-
   useEffect(() => {
-    let url = "62f66df57bf04444a76bbc61";
-    axios.get("http://localhost:6006/user-details/" + url).then((proj) => {
-      setDataToSend(proj.data);
-      let startdate = proj.data.projectstart.split("T")[0];
-      let enddate = proj.data.projectend.split("T")[0];
-      setDataToSend({
-        ...proj.data,
-        projectstart: startdate,
-        projectend: enddate,
+    let url_str = window.location.href;
+    let url = url_str.split("/");
+    let url_id = url.pop();
+    console.log("id", url_id);
+    axios
+      .get("http://localhost:6006/user-details/fetchthisproject/" + url_id)
+      .then((proj) => {
+        console.log("proj,", proj.data);
+        setDataToSend(proj.data);
+        let startdate = proj.data.projectstart.split("T")[0];
+        let enddate = proj.data.projectend.split("T")[0];
+        setDataToSend({
+          ...proj.data,
+          projectstart: startdate,
+          projectend: enddate,
+        });
       });
-    });
-    axios.get("http://localhost:6006/user-details/fetchuser").then((emps) => {
+    axios.get("http://localhost:6006/user-details/fetchusers").then((emps) => {
       setAllEmployee(emps.data);
-      setAllEmployeeDuplicate(emps.data)
+      setAllEmployeeDuplicate(emps.data);
     });
-  }, []);
 
+    axios.get("http://localhost:6006/user-details/fetchRoles").then((allroles) => {
+      setAllRoles(allroles.data)
+    });
+
+  }, []);
 
   useEffect(() => {
     console.log("allEmployee", allEmployee);
 
-      seperateArr()
+    seperateArr();
+  }, [allEmployee, allEmployeeDuplicate]);
 
-  }, [allEmployee,allEmployeeDuplicate]);
+  const seperateArr = () => {
+    let allEmpArrDuplicate = allEmployeeDuplicate;
+    let splicedArray = allEmpArrDuplicate.filter(
+      (x) => !DataToSend.team.map((i) => i.empid).includes(x.empid)
+    );
 
-  const seperateArr=()=>{
-    let allEmpArr=allEmployee
-    let allEmpArrDuplicate=allEmployeeDuplicate
-    allEmpArrDuplicate.map((all,i)=>{
-        DataToSend.team.map((t) => {
-          if (all.empid === t.empid){
-            allEmpArrDuplicate.splice(i,1)
-                    
-          }
-        });
-        
-      })
-      setAvailable(allEmpArrDuplicate);
-      console.log("Duplicate", allEmpArrDuplicate);
-      console.log("real", allEmployee);
-
-
-  }
-
+    setAvailable(splicedArray);
+  };
 
   const addToTeam = () => {
     let tempavailable = available;
@@ -113,9 +114,17 @@ const EditProject = () => {
   const sendData = () => {
     axios
       .post("http://localhost:6006/user-details/EditProjects", DataToSend)
-      .then((req, res) => {});
-    alert("posted");
-    // console.log(DataToSend)
+      .then((req, res) => {
+        toast.success("Project Updated !!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
   };
 
   const testfn = () => {
@@ -129,7 +138,7 @@ const EditProject = () => {
       createdby: "",
     });
   };
-  // console.log("available",available)
+  console.log(DataToSend);
 
   return (
     <>
@@ -138,7 +147,10 @@ const EditProject = () => {
       <div className="EditProject">
         <div className="white-blk project-display ">
           <h1>Edit Project Details</h1>
-          {/* <DisplayProject DataToSend={DataToSend} setDataToSend={setDataToSend} /> */}
+          <DisplayProject
+            DataToSend={DataToSend}
+            setDataToSend={setDataToSend}
+          />
         </div>
         <div className="white-blk project-display">
           <h1>Edit Team</h1>
@@ -146,7 +158,7 @@ const EditProject = () => {
             <Select
               defaultValue={role}
               onChange={setRole}
-              options={roles}
+              options={allRoles}
               placeholder="Select Role"
             />
 
@@ -164,13 +176,13 @@ const EditProject = () => {
             />
 
             <button className="simple-btn" onClick={() => addToTeam()}>
-              Submit
+              ADD
             </button>
           </div>
-          <div>{JSON.stringify(available)}</div>
+          {/* <div>{JSON.stringify(available)}</div> */}
           <div className="displayteam">
-            <div style={{ border: "none" }}>
-              <div>
+            <div className="list-head" style={{ border: "none" }}>
+              <div >
                 <div>
                   <span className="teamlabel">Emp ID: </span>
                 </div>
@@ -186,15 +198,15 @@ const EditProject = () => {
 
             {DataToSend.team?.map((ele) => {
               return (
-                <div key={ele.empid}>
+                <div style={{ backgroundColor: "#fef4ff" }} key={ele.empid}>
                   <div>
                     <div>{ele.empid}</div>
                     <div>{ele.name}</div>
                     <div>{ele.role}</div>
                   </div>
-                  <button onClick={() => removeFromList(ele.empid)}>
-                    Remove
-                  </button>
+                  <span onClick={() => removeFromList(ele.empid)}>
+                    <AiOutlineCloseCircle/>
+                  </span>
                 </div>
               );
             })}
@@ -211,11 +223,12 @@ const EditProject = () => {
               Clear All
             </button>
             <button onClick={() => sendData()} className="simple-btn">
-              Save Project
+              Update Project
             </button>
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

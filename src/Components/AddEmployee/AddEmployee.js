@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navigate, Link } from "react-router-dom";
 import axios from "axios";
 import DashMenu from "../Dash-menu-bar/DashMenu";
 import "../../Components/Global CSS/style.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const AddEmployee = () => {
   const [newUser, setNewUser] = useState({
@@ -17,12 +20,28 @@ const AddEmployee = () => {
   const [passMisMatch, setPassMisMatch] = useState(false);
   const [badpass, setBadpass] = useState(false);
   const [empty, setEmpty] = useState(false);
-  const [err, setErr] = useState([]);
+  const [alreadyExists, setAlreadyExists] = useState(false)
+  const [allEmps, setAllEmps] = useState([]);
 
+  useEffect(()=>{
+    axios.get("http://localhost:6006/user-details/fetchusers")
+    .then((res)=>{
+      setAllEmps(res.data)
+    })
+  },[])
   const submitData = () => {
     axios
       .post("http://localhost:6006/user-details/SignUp", newUser)
       .then((req, res) => {
+        toast.success('Employee Added !!', {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
         console.log("req", req);
         setNewUser({
           name: "",
@@ -63,6 +82,8 @@ const AddEmployee = () => {
       setEmpty(true);
     }
   };
+
+  console.log(newUser)
 
   return (
     <>
@@ -113,15 +134,30 @@ const AddEmployee = () => {
             ></input>
           </div>
           <div className='flex-input'>
-            <span><input name='adminreg' type='checkbox' onChange={()=>handleadmin()} value={newUser.adminstatus}/>Make as Admin </span>  
+            <span>Make as Admin </span> <label class="switch">
+                <input type="checkbox"  onChange={()=>handleadmin()} value={newUser.adminstatus}/>
+                <span class="slider round"></span>
+              </label>  
             <div></div>
+ 
+             
 
           </div>
           <button className="simple-btn" onClick={()=>validateSubmit()}>Create</button>
         </div>
+        <div className="err-alert">
+    
+          {passMisMatch?<div>Password Does'nt match.</div>:null}
+          {badpass?<div>Password must be minimum 8 characters.</div>:null}
+          {empty?<div>Dont leave any fields empty.</div>:null}
+          {alreadyExists ? <div>⚠️ Entered Employee ID already exists.</div> : null}
+
+        
+      </div>
        
       </div>
-
+      
+<ToastContainer/>
     </>
   );
 };

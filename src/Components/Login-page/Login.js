@@ -5,6 +5,8 @@ import ContactComp from "../Social-media/ContactComp";
 import TopNavBar from "../Top-NavBar/TopNavBar";
 import {Link,useNavigate} from 'react-router-dom'
 import { UserDetails } from "../../App";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
 
@@ -20,13 +22,14 @@ function Login() {
 
 
   useEffect(() => {
-    
+    if (localStorage.getItem("currUser") !== null)
+      navigate("/Dashboard") 
   }, []);
 
 
 
   const check=()=>{
-    axios.get('http://localhost:6006/user-details/fetchuser')
+    axios.get('http://localhost:6006/user-details/fetchusers')
     .then((res)=>{
       setFetchedData(res.data)
       let testobj=res.data
@@ -35,13 +38,20 @@ function Login() {
       })
       console.log(currUser.length)
       if (currUser.length==1) {
-        alert("matched")
         convalue.dispatch({type:'CURRENT_USER',payload:currUser})
         console.log(currUser)
-        navigate(currUser[0]._id+'/Dashboard')
+        navigate('/Dashboard')
       }
        else {
-        alert("password doesnt match")
+        toast.error('Password doesnt match !!', {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          });
       }
     })
   }
@@ -97,6 +107,7 @@ function Login() {
           <div className="sm-white">Dont have an account? <Link to='/SignUp'>Sign Up</Link></div>
         </form>
       </div>
+      <ToastContainer/>
     </div>
   );
 }

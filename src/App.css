@@ -36,9 +36,10 @@
     transform: rotate(360deg);
   }
 }
-/* body{
+body{
   background-color: blue;
-  background: url(../src/Images/bg4.jpg);
+  background: url(../src/Images/bg5.jpg);
   background-size: cover;
+  
 
-} */
+}

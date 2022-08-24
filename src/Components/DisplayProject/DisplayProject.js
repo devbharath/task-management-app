@@ -34,7 +34,7 @@ const DisplayProject = (p) => {
                 <div className='label'>Set project status:</div>
                     <Select
                 onChange={(e)=>setDataToSend({...DataToSend,projectstatus:e.value})}
-                options={[{value:'Active',label:'Active'}, {value:'To be scheduled',label:'To be scheduled'},]}
+                options={[{value:'Active',label:'Active'}, {value:'On Hold',label:'On Hold'},{value:'Completed',label:'Completed'},{value:'To be scheduled',label:'To be scheduled'},]}
                 placeholder="Select Status"
                 />
                 </div>

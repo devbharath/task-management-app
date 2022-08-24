@@ -5,37 +5,30 @@ import DisplayProject from "../DisplayProject/DisplayProject";
 import DisplayTeam from "../DisplayTeam/DisplayTeam";
 import Select from "react-select";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {AiOutlineCloseCircle} from "react-icons/ai"
 
 const AddProject = () => {
+  const [currUser, setCurrUser] = useState({});
   const [allEmployee, setAllEmployee] = useState();
   const [selectedEmployees, setSelectedEmployees] = useState([]);
   const [role, setRole] = useState(null);
   const [available, setAvailable] = useState([]);
-  const [teamState, setTeamstate] = useState([]);
+  const [allRoles, setAllRoles] = useState([]);
   const [DataToSend, setDataToSend] = useState({
-    projectname:'',
-    projectstart:'',
-    projectend:'',
-    description:'',
-    team:[],
-    projectstatus:'',
-    createdby:''
+    projectname: "",
+    projectstart: "",
+    projectend: "",
+    description: "",
+    team: [],
+    projectstatus: "",
+    createdby: currUser?.name,
   });
 
+  let roles = [];
 
-  const roles = [
-    { value: "Developer", label: "Developer" },
-    { value: "Manager", label: "Manager" },
-    { value: "DevOps", label: "DevOps" },
-  ];
-
-  let team=[]
-
-
-
-  const handlechange = (event) => {
-    // setValue(event.target.value);
-  };
+  let team = [];
 
   const seperateArr = () => {
     let temparr = available;
@@ -51,10 +44,18 @@ const AddProject = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:6006/user-details/fetchuser").then((emps) => {
+    axios.get("http://localhost:6006/user-details/fetchusers").then((emps) => {
       setAllEmployee(emps.data);
     });
+    axios.get("http://localhost:6006/user-details/fetchRoles").then((allroles) => {
+      setAllRoles(allroles.data)
+    });
+
+    let user = localStorage.getItem("currUser");
+    let a = JSON.parse(user);
+    setCurrUser(a);
   }, []);
+  console.log("curr", currUser);
 
   useEffect(() => {
     seperateArr();
@@ -79,54 +80,60 @@ const AddProject = () => {
     let newArr = tempTeam.concat(concatArr);
     setAvailable(tempavailable);
     setSelectedEmployees("");
-    setDataToSend({...DataToSend,team:newArr})
+    setDataToSend({ ...DataToSend, team: newArr, createdby: currUser.name });
   };
 
   const removeFromList = (empid) => {
-    let tempteamstate=DataToSend.team.filter((ele)=>{
-      if(ele.empid==empid){
-        let tempavailable=available
-        tempavailable.push(ele)
-        setAvailable(tempavailable)
+    let tempteamstate = DataToSend.team.filter((ele) => {
+      if (ele.empid == empid) {
+        let tempavailable = available;
+        tempavailable.push(ele);
+        setAvailable(tempavailable);
       }
-      return ele.empid!==empid
-    })
-    setDataToSend({...DataToSend,team:tempteamstate})
-
+      return ele.empid !== empid;
+    });
+    setDataToSend({ ...DataToSend, team: tempteamstate });
   };
 
-  const sendData=()=>{
-    axios.post('http://localhost:6006/user-details/AddProjects',DataToSend)
-    .then((req,res)=>{
-    })
-    alert('posted')
-      console.log(DataToSend)
+  const sendData = () => {
+    axios
+      .post("http://localhost:6006/user-details/AddProjects", DataToSend)
+      .then((req, res) => {
+        toast.success("Project Created !!", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      });
+  };
 
-  }
-
-  const testfn=()=>{
+  const testfn = () => {
     setDataToSend({
-      projectname:'',
-      projectstart:'',
-      projectend:'',
-      description:'',
-      team:[],
-      projectstatus:'',
-      createdby:''
-    })  
-  
-  }
-  console.log(DataToSend)
-
+      projectname: "",
+      projectstart: "",
+      projectend: "",
+      description: "",
+      team: [],
+      projectstatus: "",
+      createdby: "",
+    });
+  };
 
   return (
     <>
-      <DashMenu />
+      <DashMenu user={currUser} />
 
       <div className="addproject">
         <div className="white-blk project-display ">
           <h1>Create a new project</h1>
-          <DisplayProject DataToSend={DataToSend} setDataToSend={setDataToSend} />
+          <DisplayProject
+            DataToSend={DataToSend}
+            setDataToSend={setDataToSend}
+          />
         </div>
         <div className="white-blk project-display">
           <h1>Create a Team</h1>
@@ -134,7 +141,7 @@ const AddProject = () => {
             <Select
               defaultValue={role}
               onChange={setRole}
-              options={roles}
+              options={allRoles}
               placeholder="Select Role"
             />
 
@@ -148,43 +155,62 @@ const AddProject = () => {
               }))}
               placeholder="Select Employee"
               value={selectedEmployees}
-              isDisabled={role!==null?false:true}
-              
+              isDisabled={role !== null ? false : true}
             />
 
             <button className="simple-btn" onClick={() => addToTeam()}>
-              Submit
+              ADD
             </button>
           </div>
-          {/* <div>{JSON.stringify(DataToSend)}</div> */}
           <div className="displayteam">
-          <div style={{border:"none"}}>
-                  <div>
-                    <div><span className='teamlabel'>Emp ID: </span></div>
-                     <div><span className='teamlabel'>Name: </span></div>
-                    <div><span className='teamlabel'>Role: </span></div>
-                  </div>
-                  <button style={{display:"none"}}>Remove</button>
+            <div className="list-head" style={{ border: "none" }}>
+              <div >
+                <div>
+                  <span className="teamlabel">Emp ID: </span>
                 </div>
+                <div>
+                  <span className="teamlabel">Name: </span>
+                </div>
+                <div>
+                  <span className="teamlabel">Role: </span>
+                </div>
+              </div>
+              <button style={{ display: "none" }}>Remove</button>
+            </div>
 
             {DataToSend.team?.map((ele) => {
               return (
-                <div>
+                <div style={{ backgroundColor: "#fef4ff",fontSize:"15px"}} key={ele.empid}>
                   <div>
                     <div>{ele.empid}</div>
-                     <div>{ele.name}</div>
+                    <div>{ele.name}</div>
                     <div>{ele.role}</div>
                   </div>
-                  <button onClick={()=>removeFromList(ele.empid)}>Remove</button>
+                  <span onClick={() => removeFromList(ele.empid)}>
+                    <AiOutlineCloseCircle/>
+                  </span>
                 </div>
               );
             })}
           </div>
         </div>
         <div className="white-blk create-edit-proj">
-          <div><button onClick={()=>{testfn()}} className="simple-btn reset-btn">Clear All</button><button onClick={()=>sendData()} className="simple-btn">Create Project</button></div>
+          <div>
+            <button
+              onClick={() => {
+                testfn();
+              }}
+              className="simple-btn reset-btn"
+            >
+              Clear All
+            </button>
+            <button onClick={() => sendData()} className="simple-btn">
+              Create Project
+            </button>
+          </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };
